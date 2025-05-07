@@ -1,66 +1,61 @@
-# SurVis - Visual Literature Browser
+# 3D Object Detection for Autonomous Driving: A Comprehensive Survey (2015-2024)
 
-![Screenshot](/doc/survis.png)
+This repository hosts a [SurVis](https://github.com/fabian-beck/survis)-based interactive literature survey visualizing the landscape of 3D object detection techniques specifically for autonomous driving, covering 10 research papers from 2015 to 2024. The survey delves into the evolution, current methodologies, and potential future trajectories of this critical perception component in autonomous vehicle systems.
 
-SurVis is a flexible online browser to present and analyze scientific literature. The system is made for authors of survey articles, theses, or books who want to share their references in a user-friendly way. All you need to start is a bib file and a list of keywords for your papers.
+## 📊 Overview
 
-Test SurVis with a reference literature database: http://dynamicgraphs.fbeck.com
+3D object detection is fundamental to the perception capabilities of autonomous vehicles. It enables the precise localization of surrounding objects (e.g., vehicles, pedestrians, cyclists, and other obstacles) in three-dimensional space. By achieving accurate detection, autonomous driving systems can make informed and safe navigation decisions, significantly contributing to enhanced road safety and operational efficiency.
 
-## How To Use SurVis for Your Literature Collection
+This survey systematically analyzes research published in major computer vision conferences (CVPR, ICCV, ECCV) and influential arXiv preprints between 2015 and 2024. It tracks the evolution of the field through distinct phases:
 
-Dowload the [latest SurVis release](https://github.com/fabian-beck/survis/releases/latest) or fork this repository.
+* **2015-2017:** Initial exploration phase, characterized by foundational work and limited datasets.
+* **2018:** A breakthrough year, marked by the introduction of the PointNet series and the verification of voxel-based CNNs.
+* **2019-2021:** A period of accelerated development with a diversification of approaches and techniques.
+* **2022-2024:** An integration phase, with a strong focus on Bird's-Eye View (BEV) Transformer models and end-to-end trainable systems.
 
-To start SurVis, open 'src/index.html' in your browser.
+## 🔍 Survey Scope
 
-The bibliography data is stored in 'bib/references.bib' in BibTeX format.
+This survey concentrates on 3D object detection algorithms designed for **outdoor scenes** within the context of **autonomous driving**. The primary areas covered include:
 
-Supplemental data is contained in 'src/data/':
-* 'tag_categories.js': list of special tag categories; they can be used as a prefix for the tags and appear, for instance, 'a:b' refers to tag 'b' in tag category 'a'
-* 'authorized_tags.js': tags that are defined through a description (highlighted in SurVis, description appears as a tooltip)
-* 'search_stopwords.js': a list of stopwords used to exclude terms from search queries
-* 'papers_pdf' (optional): PDF files of the papers, please use the BibTeX id as a file name
-* 'papers_img' (optional): PNG thumbnails for the papers, please use the BibTeX id as a file name
+* **LiDAR-based methods:** Techniques that primarily use Light Detection and Ranging data.
+* **Camera-based methods:** Approaches relying on monocular, stereo, or multi-view camera systems.
+* **Multi-modal fusion approaches:** Methods that combine data from multiple sensor types (e.g., LiDAR and camera).
+* **Hybrid and graph-based techniques:** Innovative methods employing combinations of feature representations or graph neural networks.
 
-Please do not edit the files in 'src/data/generated/' because they are created automatically. 
+The research examined predominantly focuses on **vehicle-mounted perception systems** designed to detect traffic participants and obstacles within a typical range of **10-150 meters** in complex urban environments. Performance is often evaluated using standard autonomous driving benchmarks such as **KITTI** and **nuScenes**.
 
-After completing your changes, just run 'update_data.py' with Python 3. Reload SurVis in the browser to see the changed bibliography. The script will continue to check for updates on the bib file until you stop it.
+## 📚 Literature Categories
 
-If the edit mode is activated, BibTeX entries can be modified in the browser, but are not stored in the 'bib' directory. To make those changes persistent, use 'download BibTex' in SurVis and copy the BibTeX data to your bib file in the 'bib' directory. You can also use the features to save and load the data from local storage of the browser; be careful, however, these features are still experimental.
+The surveyed literature is organized into four main categories based on the primary input modality and processing architecture:
 
-Further properties of SurVis, such as the title of the page, can be modified in the file 'src/properties.js'. For the publication of your literature collection, you should usually deactivate the edit mode in the properties ('editable = false;').
+### 1. LiDAR-Based Methods
+These methods leverage the rich 3D geometric information provided by LiDAR sensors.
+* **VoxelNet:** An end-to-end learning framework that processes raw point clouds by dividing them into volumetric pixels (voxels) and applying 3D convolutions.
+* **PointPillars:** An efficiency-focused approach that utilizes "pillars" (vertical columns of points) to create pseudo-images, enabling faster 2D convolutions for feature extraction and detection.
+* **PointRCNN:** A two-stage detector that directly learns point-wise features from raw point clouds for proposal generation and refinement.
 
-Enjoy SurVis and send feedback if you like.
+### 2. Camera-Based Methods
+These approaches aim to perform 3D object detection using only image data, which is more cost-effective but inherently challenging due to the lack of direct depth information.
+* **Pseudo-LiDAR:** A technique that first estimates depth from monocular or stereo images and then converts this depth map into a 3D point cloud representation, allowing existing LiDAR-based methods to be applied.
+* **FCOS3D:** An anchor-free, fully convolutional single-stage network designed for monocular 3D object detection, directly predicting 3D bounding boxes from image features.
 
-## Learn more
+### 3. Multi-Modal Fusion Methods
+These methods combine the strengths of different sensors, typically LiDAR and cameras, to achieve more robust and accurate detection.
+* **Multi-view 3D (MV3D):** A two-stage fusion pipeline that generates object proposals from both LiDAR point clouds and camera images, then fuses features for accurate 3D box estimation.
+* **Frustum PointNet:** A method that leverages mature 2D object detectors to generate 2D regions of interest (RoIs) in images. These RoIs are then used to extrude 3D frustums in the point cloud, significantly reducing the search space for 3D detection.
+* **PointPainting:** A sequential fusion technique where semantic segmentation results from camera images are used to "paint" or augment LiDAR points with class-specific semantic information before feeding them into a 3D detector.
 
-We've published a paper about SurVis at VAST 2015 - please reference it if you use or want to refer to SurVis in one of your publications. 
+### 4. Hybrid and Graph-Based Methods
+This category includes innovative approaches that combine different feature representations or utilize graph structures for detection.
+* **Point-GNN:** A method that formulates 3D object detection as a task on graph neural networks, where a graph is constructed from the point cloud, and GNNs are used to predict bounding boxes.
+* **PV-RCNN (Point-Voxel RCNN):** A high-performance detector that effectively combines the advantages of both voxel-based (for efficient feature encoding) and point-based (for flexible receptive fields) operations.
 
-Beck, Fabian; Koch, Sebastian; Weiskopf, Daniel: Visual Analysis and Dissemination of Scientific Literature Collections with SurVis. In: IEEE Transactions on Visualization and Computer Graphics (2016).
+## 📊 Data Sources
 
-* DOI: http://dx.doi.org/10.1109/TVCG.2015.2467757
-* Preview video: https://vimeo.com/136206061 
+The papers included in this visualization were systematically selected and analyzed from:
 
-## List of Literature Collections Using SurVis
+* **Major Computer Vision Conferences:** Proceedings from CVPR (Conference on Computer Vision and Pattern Recognition), ICCV (International Conference on Computer Vision), and ECCV (European Conference on Computer Vision).
+* **Highly Cited arXiv Preprints:** Influential and foundational works that have significantly impacted the field, often appearing on arXiv before or alongside conference publication.
+* **Citation Networks:** Tools like [ConnectedPapers.com](https://www.connectedpapers.com/) were used to identify related and influential works.
 
-* Dynamic Graph Visualization - http://dynamicgraphs.fbeck.com
-* Visualizing Group Structures in Graphs - http://groups-in-graphs.corinna-vehlow.com/
-* Performance Visualization - http://idav.ucdavis.edu/~ki/STAR/
-* Visualization for Software Reuse - http://www.cos.ufrj.br/~schots/survis_reuse/
-* Sparklines - http://sparklines-literature.fbeck.com/
-* Survey of Surveys - http://sos.swansea.ac.uk/
-* Visual Approaches for Analyzing Scientific Literature and Patents - http://ieg.ifs.tuwien.ac.at/~federico/LiPatVis/
-* Visualizing High-Dimensional Data - http://www.sci.utah.edu/~shusenl/highDimSurvey/website/
-* Visualization of Cultural Heritage Collection Data - https://danubevislab.github.io/collectionvis/
-* Survey of Visual Summaries - http://graphics.cs.wisc.edu/Vis/vis_summaries/
-* Optimization of Parallel Computing Systems - http://www.smemeti.com/slr/
-* Deep Learning Visualizations - https://snie2012.github.io/deep-learning-vis-collection/
-* Visualization in Astrophysics - https://tdavislab.github.io/astrovis-survis/
-* Categorical Visualisation Techniques - https://cat-vis.github.io/src/
-
-Please contact me (fabian.beck@uni-bamberg.de) if you know other collections using SurVis.
-
-## Contact
-
-Fabian Beck
-
-http://research.fbeck.com
+All selected papers were evaluated in the context of standard autonomous driving datasets such as **KITTI** and **nuScenes** to ensure relevance and allow for consistent benchmarking understanding.
